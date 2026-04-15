@@ -19,3 +19,6 @@ results/
 # Secrets
 .env
 *.key
+
+# Claude internals
+.claude/worktrees/
