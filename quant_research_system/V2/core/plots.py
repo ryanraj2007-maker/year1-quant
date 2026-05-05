@@ -75,8 +75,9 @@ def plot_r_distribution(trades: pd.DataFrame) -> None:
 def plot_equity_curve_with_mc_bands(
     trades: pd.DataFrame,
     simulations: pd.DataFrame,
-    starting_equity: float = 1.0
-) -> None:
+    starting_equity: float = 1.0,
+    style="bands"
+    ) -> None:
     """
     Overlay the real equity curve on top of Monte Carlo percentile bands.
 
@@ -97,14 +98,16 @@ def plot_equity_curve_with_mc_bands(
     trade_steps = range(len(p5))
 
     plt.figure(figsize=(12, 6))
+    if style == "bands":
+        # Outer band: p5–p95 (light shading)
+        plt.fill_between(trade_steps, p5, p95, alpha=0.15, color="steelblue", label="p5–p95 range")
 
-    # Outer band: p5–p95 (light shading)
-    plt.fill_between(trade_steps, p5, p95, alpha=0.15, color="steelblue", label="p5–p95 range")
-
-    # Inner band: p25–p75 (darker shading)
-    plt.fill_between(trade_steps, p25, p75, alpha=0.25, color="steelblue", label="p25–p75 range")
-
-    # Actual backtest equity curve
+        # Inner band: p25–p75 (darker shading)
+        plt.fill_between(trade_steps, p25, p75, alpha=0.25, color="steelblue", label="p25–p75 range")
+    elif style == "paths":
+        for i in range(len(simulations)):
+                plt.plot(simulations.iloc[i].values, alpha=0.05, color="steelblue", linewidth=0.5)  # very faint lines for all paths
+        # Actual backtest equity curve
     plt.plot(eq.index, eq["equity"], color="black", linewidth=1.5, label="Actual backtest")
 
     plt.title("Equity Curve vs Monte Carlo Bands")
@@ -166,13 +169,15 @@ def save_all_figures(output_dir: str = "results") -> None:
         print(f"Saved: {filepath}")
 
 
-def plot_all(trades: pd.DataFrame, starting_equity: float = 1.0) -> None:
+def plot_all(trades: pd.DataFrame, starting_equity: float = 1.0, simulations: pd.DataFrame = None, style: str = "bands") -> None:
     """
     Generate all standard plots in one call.
 
     Does not call plt.show() — the caller handles that so all figures
     open at the same time.
     """
+    if simulations is not None:
+        plot_equity_curve_with_mc_bands(trades, simulations, starting_equity=starting_equity, style=style)   
     plot_equity_curve(trades, starting_equity=starting_equity)
     plot_drawdown_curve(trades, starting_equity=starting_equity)
     plot_r_distribution(trades)

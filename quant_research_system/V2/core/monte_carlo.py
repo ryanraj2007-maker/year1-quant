@@ -195,7 +195,8 @@ def monte_carlo_summary(
     n_simulations: int = 1000,
     n_trades: int | None = None,
     starting_equity: float = 1.0,
-    ruin_threshold: float = 0.0
+    ruin_threshold: float = 0.0,
+    simulations: pd.DataFrame | None = None
 ) -> dict:
     """
     Run a full Monte Carlo simulation and return all summary statistics.
@@ -209,13 +210,14 @@ def monte_carlo_summary(
                      negative). For prop firm use, pass e.g. 0.9 to flag any
                      path that loses more than 10% from starting_equity=1.0.
     """
-    simulations = run_monte_carlo(
-        trades=trades,
-        n_simulations=n_simulations,
-        n_trades=n_trades,
-        starting_equity=starting_equity
-    )
 
+    if simulations is None:
+        simulations = run_monte_carlo(
+            trades=trades,
+            n_simulations=n_simulations,
+            n_trades=n_trades,
+            starting_equity=starting_equity
+        )
     stats        = final_equity_stats(simulations)
     dd_dist      = drawdown_distribution(simulations, starting_equity=starting_equity)
     prob_ruin    = probability_of_ruin(simulations, ruin_threshold=ruin_threshold)
