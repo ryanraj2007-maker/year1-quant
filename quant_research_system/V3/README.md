@@ -1,4 +1,4 @@
-Quant Research System — V3 (Walk-Forward Validation Framework)
+Quant Research System — V3 (Phase 3: Walk-Forward Validation Framework)
 
 Built on top of V2. Adds rigorous walk-forward validation so that any strategy
 or ML model can be tested without lookahead bias.
