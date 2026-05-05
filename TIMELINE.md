@@ -28,11 +28,11 @@ the fundamentals before worrying about code quality.
 
 ---
 
-## V2 — Phase 1: Polish & Solidify Core
-**Date:** March 2025
+## V2 — Phase 1: Polish & Solidify Core ✅
+**Date:** March–April 2026
 
-Designed a formal 6-phase build plan. V2 = Phase 1 of the plan (V3 will be Phase 2, etc.).
-Focus: clean up V1 mistakes and build a proper foundation before adding new features.
+Designed a formal build plan. V2 = Phase 1 — clean up V1 mistakes and build a proper
+foundation before adding new features.
 
 ---
 
@@ -238,7 +238,7 @@ prop firm pass rate calculations.
 | Phase | Version | Goal | Target |
 |-------|---------|------|--------|
 | Phase 1 | V2 | Polish & solidify core ✅ | Complete — April 2026 |
-| Phase 2 | V3 | Walk-forward validation framework | 2–3 weeks |
+| Phase 2 | V3 | Walk-forward validation framework ← *current* | 2–3 weeks |
 | Phase 3 | V4 | Gradient boosting signal generator | 4–6 weeks |
 | Phase 4 | V5 | Interactive dashboard | 2–3 weeks |
 | Phase 5 | V6 | Second ML layer (NLP / regime detection / RL) | Summer 2026 |
@@ -272,6 +272,16 @@ prop firm pass rate calculations.
 - **(c) RL for execution** — PPO or DQN agent trained against the backtester for
   position sizing or execution.
 - Default unless specified: option (a).
+
+---
+
+---
+
+## V3 — Phase 2: Walk-Forward Validation Framework
+**Date:** May 2026 — in progress
+
+Copied V2 as the base. Adding `walk_forward.py` to enable rigorous out-of-sample
+testing. Prerequisite for the gradient boosting work in V4.
 
 ---
 
